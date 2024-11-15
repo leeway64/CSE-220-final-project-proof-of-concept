@@ -1,0 +1,6 @@
+cmake_minimum_required(3.28)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX20_STANDARD_COMPILE_OPTION, "-std:c++latest")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+
