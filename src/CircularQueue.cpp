@@ -4,6 +4,7 @@ CircularQueue::CircularQueue(int size)
 {
     this->size = size;
     this->circularQueue.reserve(size);
+    this->back_index = 0;
 }
 
 CircularQueue::CircularQueue(std::vector<int> list)
@@ -37,11 +38,13 @@ int CircularQueue::pop()
 {
     int value = this->circularQueue[back_index];
     auto position = this->circularQueue.begin() + back_index;
-    
-    int new_back_index = back_index % size;
-    this->back_index = new_back_index;
 
     this->circularQueue.erase(position);
+    
+    if (this->back_index > this->circularQueue.size() - 1)
+    {
+        this->back_index = 0;
+    }
 
     return value;
 }
