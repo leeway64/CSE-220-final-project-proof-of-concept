@@ -6,3 +6,5 @@ _deps
 
 bin/*
 !bin/.gitkeep
+
+.vscode/*

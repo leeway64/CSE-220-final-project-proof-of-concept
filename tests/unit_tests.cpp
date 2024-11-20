@@ -4,26 +4,65 @@
 TEST_CASE("CircularQueue", "[CircularQueue]")
 {
     const std::vector<int> vec1 = {1, 2, 3, 4, 5};
-    const int size1 = 3;
+    const int size1 = 2;
+
+    const std::vector<int> vec2 = {223432, 34546, 435435, 135, 54654, 1, 4, 90, 6, 7, 8};
+    const int size2 = 3;
+
+    CircularQueue cq1 = CircularQueue(size1);
+    CircularQueue cq2 = CircularQueue(vec1);
+    CircularQueue cq3 = CircularQueue(size2);
+    CircularQueue cq4 = CircularQueue(vec2);
+
     SECTION("Constructors")
     {
-        CircularQueue cq1 = CircularQueue();
-        CircularQueue cq2 = CircularQueue(size1);
-        CircularQueue cq3 = CircularQueue(vec1);
-
-        REQUIRE(cq1.get_size() == 0);
+        REQUIRE(cq1.get_size() == size1);
         REQUIRE(cq1.get_queue() == std::vector<int>{});
 
-        REQUIRE(cq2.get_size() == size1);
-        REQUIRE(cq2.get_queue() == std::vector<int>{});
-
-        REQUIRE(cq3.get_size() == vec1.size());
-        REQUIRE(cq3.get_queue() == vec1);
+        REQUIRE(cq2.get_size() == vec1.size());
+        REQUIRE(cq2.get_queue() == vec1);
     }
 
-    SECTION("push")
+    SECTION("push, get_front, get_back")
     {
+        SECTION("Constructor that accepts size")
+        {            
+            cq3.push(6);
+            REQUIRE(cq3.get_queue() == std::vector<int>{6});
+            REQUIRE(cq3.get_back() == 6);
 
+            cq3.push(7);
+            REQUIRE(cq3.get_queue() == std::vector<int>{6, 7});
+            REQUIRE(cq3.get_back() == 6);
+
+            cq3.push(8);
+            REQUIRE(cq3.get_queue() == std::vector<int>{6, 7, 8});
+            REQUIRE(cq3.get_back() == 6);
+
+            cq3.push(9);
+            REQUIRE(cq3.get_queue() == std::vector<int>{9, 7, 8});
+            REQUIRE(cq3.get_back() == 7);
+        }
+
+        SECTION("Constructor that accepts vector")
+        {
+            REQUIRE(cq4.get_front() == 8);
+            REQUIRE(cq4.get_back() == 223432);            
+
+            cq4.push(-1);
+            REQUIRE(cq4.get_queue() == std::vector<int>{-1, 34546, 435435, 135, 54654, 1, 4, 90, 6, 7, 8});
+            REQUIRE(cq4.get_front() == -1);
+
+            cq4.push(-20);
+            REQUIRE(cq4.get_queue() == std::vector<int>{-1, -20, 435435, 135, 54654, 1, 4, 90, 6, 7, 8});
+            REQUIRE(cq4.get_front() == -20);
+        }
     }
 
+    SECTION("pop")
+    {
+        REQUIRE(cq4.pop() == 223432);
+        REQUIRE(cq4.get_back() == 34546);
+        REQUIRE(cq4.get_queue() == std::vector<int>{34546, 435435, 135, 54654, 1, 4, 90, 6, 7, 8});
+    }
 }
