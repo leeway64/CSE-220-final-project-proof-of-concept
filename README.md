@@ -9,3 +9,8 @@ independently of the [Scarab simulator](https://github.com/Litz-Lab/scarab).
 cmake .
 cmake --build .
 ```
+
+## Running tests
+```
+./bin/unit_tests
+```
