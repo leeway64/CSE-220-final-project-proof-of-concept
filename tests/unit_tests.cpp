@@ -9,10 +9,10 @@ TEST_CASE("CircularQueue", "[CircularQueue]")
     const std::vector<int> vec2 = {223432, 34546, 435435, 135, 54654, 1, 4, 90, 6, 7, 8};
     const int size2 = 3;
 
-    CircularQueue cq1 = CircularQueue(size1);
-    CircularQueue cq2 = CircularQueue(vec1);
-    CircularQueue cq3 = CircularQueue(size2);
-    CircularQueue cq4 = CircularQueue(vec2);
+    CircularQueue<int> cq1 = CircularQueue<int>(size1);
+    CircularQueue<int> cq2 = CircularQueue<int>(vec1);
+    CircularQueue<int> cq3 = CircularQueue<int>(size2);
+    CircularQueue<int> cq4 = CircularQueue<int>(vec2);
 
     SECTION("Constructors")
     {
