@@ -7,6 +7,8 @@ class CircularQueue
         int size = 0;
         int counter = 0;
         int back_index = 0;
+        int front_index = 0;
+
     
     public:
         // Initializes a vector with size equal to size

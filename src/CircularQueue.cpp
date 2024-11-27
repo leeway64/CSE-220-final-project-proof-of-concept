@@ -13,6 +13,7 @@ CircularQueue::CircularQueue(std::vector<int> list)
     this->size = list.size();
     this->circularQueue.reserve(this->size);
     this->counter = this->size;
+    this->front_index = (this->counter - 1) % size;
     this->back_index = 0;
 }
 
@@ -31,7 +32,9 @@ void CircularQueue::push(int value)
 
         this->back_index = (counter + 1) % size;
     }
+
     this->counter++;
+    this->front_index = (this->counter - 1) % size;
 }
 
 int CircularQueue::pop()
@@ -61,7 +64,7 @@ int CircularQueue::get_size()
 
 int CircularQueue::get_front()
 {
-    return this->circularQueue[(this->counter - 1) % size];
+    return this->circularQueue[this->front_index];
 }
 
 int CircularQueue::get_back()

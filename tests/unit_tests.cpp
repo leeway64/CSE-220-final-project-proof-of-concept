@@ -29,33 +29,39 @@ TEST_CASE("CircularQueue", "[CircularQueue]")
         {            
             cq3.push(6);
             REQUIRE(cq3.get_queue() == std::vector<int>{6});
+            REQUIRE(cq3.get_front() == 6);
             REQUIRE(cq3.get_back() == 6);
 
             cq3.push(7);
             REQUIRE(cq3.get_queue() == std::vector<int>{6, 7});
+            REQUIRE(cq3.get_front() == 7);
             REQUIRE(cq3.get_back() == 6);
 
             cq3.push(8);
             REQUIRE(cq3.get_queue() == std::vector<int>{6, 7, 8});
+            REQUIRE(cq3.get_front() == 8);
             REQUIRE(cq3.get_back() == 6);
 
             cq3.push(9);
             REQUIRE(cq3.get_queue() == std::vector<int>{9, 7, 8});
+            REQUIRE(cq3.get_front() == 9);
             REQUIRE(cq3.get_back() == 7);
         }
 
         SECTION("Constructor that accepts vector")
         {
             REQUIRE(cq4.get_front() == 8);
-            REQUIRE(cq4.get_back() == 223432);            
+            REQUIRE(cq4.get_back() == 223432);  
 
             cq4.push(-1);
             REQUIRE(cq4.get_queue() == std::vector<int>{-1, 34546, 435435, 135, 54654, 1, 4, 90, 6, 7, 8});
             REQUIRE(cq4.get_front() == -1);
+            REQUIRE(cq4.get_back() == 34546);
 
             cq4.push(-20);
             REQUIRE(cq4.get_queue() == std::vector<int>{-1, -20, 435435, 135, 54654, 1, 4, 90, 6, 7, 8});
             REQUIRE(cq4.get_front() == -20);
+            REQUIRE(cq4.get_back() == 435435);
         }
     }
 
@@ -69,6 +75,7 @@ TEST_CASE("CircularQueue", "[CircularQueue]")
             cq3.push(9);
             
             REQUIRE(cq3.get_queue() == std::vector<int>{9, 7, 8});
+            REQUIRE(cq3.get_front() == 9);
             REQUIRE(cq3.get_back() == 7);
 
             REQUIRE(cq3.pop() == 7);
