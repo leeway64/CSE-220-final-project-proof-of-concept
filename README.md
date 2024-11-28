@@ -2,7 +2,10 @@
 
 This project implements the circular queue as outlined in
 [SWQUE: A Mode Switching Issue Queue with Priority-Correcting Circular Queue](https://dl.acm.org/doi/pdf/10.1145/3352460.3358293),
-independently of the [Scarab simulator](https://github.com/Litz-Lab/scarab).
+independently of the [Scarab simulator](https://github.com/Litz-Lab/scarab), as part of the final
+project for CSE220.
+
+To see the actual implementation of the project, see this [GitHub repo](https://github.com/leeway64/scarab-final-project-implementation).
 
 ## Building
 ```
