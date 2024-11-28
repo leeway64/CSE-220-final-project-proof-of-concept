@@ -17,3 +17,9 @@ cmake --build .
 ```
 ./bin/unit_tests
 ```
+
+
+## Acknowledgements
+This proof-of-concept's implementation was heavily influenced by the ideas given in the
+[Circular buffer Wikipedia page](https://en.wikipedia.org/wiki/Circular_buffer); refer to that page
+for more information on circular buffers.
