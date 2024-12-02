@@ -48,6 +48,8 @@ class CircularQueue
         // Return an iterator pointing to one element past the back of the queue
         auto end();
 
+        auto erase(auto iter);
+
     private:
         // The vector containing all the values in the circular queue
         std::vector<T> circularQueue{};
@@ -59,10 +61,6 @@ class CircularQueue
         
         int back_index = 0;
         int front_index = 0;
-
-        // Populate a vector containing all the values of the circular queue. The first value of the
-        // vector is the front of the circular queue, and the last value is the back of the circular queue.
-        void unroll_queue();
 
         std::vector<T> unrolled_queue{};
 };
@@ -96,12 +94,12 @@ void CircularQueue<T>::push(T value)
     }
     else
     {
-        int index = counter % this->max_size;
+        int index = this->counter % this->max_size;
         auto position = this->circularQueue.begin() + index;
         this->circularQueue.erase(position);
         this->circularQueue.insert(position, value);
 
-        this->back_index = (counter + 1) % max_size;
+        this->back_index = (this->counter + 1) % max_size;
     }
 
     this->counter++;
@@ -159,33 +157,22 @@ T CircularQueue<T>::get_back()
 }
 
 template<class T>
-void CircularQueue<T>::unroll_queue()
-{
-    unrolled_queue = {};
-    int i = this->front_index;
-    while (i != this->back_index)
-    {
-        this->unrolled_queue.push_back(this->circularQueue[i]);
-        --i;
-
-        if (i < 0)
-        {
-            i = this->circularQueue.size() - 1;
-        }
-    }
-    this->unrolled_queue.push_back(this->circularQueue[i]);
-}
-
-template<class T>
 auto CircularQueue<T>::begin()
 {
-    CircularQueue<T>::unroll_queue();
-    return this->unrolled_queue.begin();
+    return this->circularQueue.begin();
 }
 
 template<class T>
 auto CircularQueue<T>::end()
 {
-    CircularQueue<T>::unroll_queue();
-    return this->unrolled_queue.end();
+    return this->circularQueue.end();
+}
+
+
+template<class T>
+auto CircularQueue<T>::erase(auto iter)
+{
+    this->counter--;
+    this->front_index = (this->counter - 1) % max_size;
+    return this->circularQueue.erase(iter);
 }

@@ -9,6 +9,8 @@ TEST_CASE("CircularQueue", "[CircularQueue]")
     const std::vector<int> vec2 = {223432, 34546, 435435, 135, 54654, 1, 4, 90, 6, 7, 8};
     const int size2 = 3;
 
+    const std::vector<double> vec3 = {0.32323201, 12332.3323, 1893.234324};
+
     CircularQueue<int> cq1 = CircularQueue<int>(size1);
     CircularQueue<int> cq2 = CircularQueue<int>(vec1);
     CircularQueue<int> cq3 = CircularQueue<int>(size2);
@@ -131,19 +133,16 @@ TEST_CASE("CircularQueue", "[CircularQueue]")
 
     SECTION("For-each loop")
     {
-        const std::vector<int> test_vector1 = {5, 4, 3, 2, 1};
-        const std::vector<double> test_vector2 = {0.32323201, 1893.234324, 12332.3323};
-
         SECTION("With integers")
         {
-            REQUIRE(*cq2.begin() == 5);
-            REQUIRE(*(cq2.end() - 1) == 1);
+            REQUIRE(*cq2.begin() == 1);
+            REQUIRE(*(cq2.end() - 1) == 5);
 
             auto iter = cq2.begin();
             int i = 0;
             while(iter != cq2.end())
             {
-                REQUIRE(*iter == test_vector1[i]);
+                REQUIRE(*iter == vec1[i]);
                 iter++;
                 i++;
             }
@@ -156,15 +155,81 @@ TEST_CASE("CircularQueue", "[CircularQueue]")
             cq6.push(1893.234324);
             cq6.push(0.32323201);
             REQUIRE(*cq6.begin() == 0.32323201);
-            REQUIRE(*(cq6.end() - 1) == 12332.3323);
+            REQUIRE(*(cq6.end() - 1) == 1893.234324);
 
             int i = 0;
             for (auto iter = cq6.begin(); iter != cq6.end();)
             {
-                REQUIRE(*iter == test_vector2[i]);
+                REQUIRE(*iter == vec3[i]);
                 ++iter;
                 ++i;
             }
+        }
+    }
+
+    SECTION("Erase")
+    {
+        SECTION("Erase the beginning")
+        {
+            cq2.erase(cq2.begin());
+            REQUIRE(cq2.get_queue() == std::vector<int>{2, 3, 4, 5});
+            REQUIRE(cq2.get_size() == 4);
+            REQUIRE(cq2.get_front() == 5);
+            REQUIRE(cq2.get_back() == 2);
+
+            cq2.push(6);
+            REQUIRE(cq2.get_queue() == std::vector<int>{2, 3, 4, 5, 6});
+            REQUIRE(cq2.get_size() == 5);
+            REQUIRE(cq2.get_front() == 6);
+            REQUIRE(cq2.get_back() == 2);
+
+            cq2.pop();
+            REQUIRE(cq2.get_queue() == std::vector<int>{3, 4, 5, 6});
+            REQUIRE(cq2.get_size() == 4);
+            REQUIRE(cq2.get_front() == 6);
+            REQUIRE(cq2.get_back() == 3);
+        }
+
+        SECTION("Erase the middle")
+        {
+            cq2.erase(cq2.begin() + 3);
+            REQUIRE(cq2.get_queue() == std::vector<int>{1, 2, 3, 5});
+            REQUIRE(cq2.get_size() == 4);
+            REQUIRE(cq2.get_front() == 5);
+            REQUIRE(cq2.get_back() == 1);
+
+            cq2.push(6);
+            REQUIRE(cq2.get_queue() == std::vector<int>{1, 2, 3, 5, 6});
+            REQUIRE(cq2.get_size() == 5);
+            REQUIRE(cq2.get_front() == 6);
+            REQUIRE(cq2.get_back() == 1);
+
+            cq2.pop();
+            REQUIRE(cq2.get_queue() == std::vector<int>{2, 3, 5, 6});
+            REQUIRE(cq2.get_size() == 4);
+            REQUIRE(cq2.get_front() == 6);
+            REQUIRE(cq2.get_back() == 2);     
+        }
+
+        SECTION("Erase the end")
+        {
+            cq2.erase((cq2.end() - 1));
+            REQUIRE(cq2.get_queue() == std::vector<int>{1, 2, 3, 4});
+            REQUIRE(cq2.get_size() == 4);
+            REQUIRE(cq2.get_front() == 4);
+            REQUIRE(cq2.get_back() == 1);
+
+            cq2.push(5);
+            REQUIRE(cq2.get_queue() == std::vector<int>{1, 2, 3, 4, 5});
+            REQUIRE(cq2.get_size() == 5);
+            REQUIRE(cq2.get_front() == 5);
+            REQUIRE(cq2.get_back() == 1);
+
+            cq2.pop();
+            REQUIRE(cq2.get_queue() == std::vector<int>{2, 3, 4, 5});
+            REQUIRE(cq2.get_size() == 4);
+            REQUIRE(cq2.get_front() == 5);
+            REQUIRE(cq2.get_back() == 2);            
         }
     }
 }
