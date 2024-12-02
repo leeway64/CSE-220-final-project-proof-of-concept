@@ -133,6 +133,7 @@ TEST_CASE("CircularQueue", "[CircularQueue]")
     {
         const std::vector<int> test_vector1 = {5, 4, 3, 2, 1};
         const std::vector<double> test_vector2 = {0.32323201, 1893.234324, 12332.3323};
+
         SECTION("With integers")
         {
             REQUIRE(*cq2.begin() == 5);

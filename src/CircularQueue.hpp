@@ -1,7 +1,9 @@
 #include <vector>
 
-// This class implements a circular buffer. Refer to this Wikipedia page for more information: https://en.wikipedia.org/wiki/Circular_buffer
-// This implementation was heavily influenced by the ideas laid out in the Circular buffer Wikipedia page.
+// This class implements a circular buffer. Refer to this Wikipedia page for more information:
+// https://en.wikipedia.org/wiki/Circular_buffer
+// This implementation was heavily influenced by the ideas laid out in the Circular buffer
+// Wikipedia page.
 template<class T>
 class CircularQueue
 {
@@ -109,8 +111,8 @@ void CircularQueue<T>::push(T value)
 template<class T>
 T CircularQueue<T>::pop()
 {
-    T value = this->circularQueue[back_index];
-    auto position = this->circularQueue.begin() + back_index;
+    T value = this->circularQueue[this->back_index];
+    auto position = this->circularQueue.begin() + this->back_index;
 
     this->circularQueue.erase(position);
     
@@ -153,7 +155,7 @@ T CircularQueue<T>::get_front()
 template<class T>
 T CircularQueue<T>::get_back()
 {
-    return this->circularQueue[back_index];
+    return this->circularQueue[this->back_index];
 }
 
 template<class T>
@@ -161,7 +163,7 @@ void CircularQueue<T>::unroll_queue()
 {
     unrolled_queue = {};
     int i = this->front_index;
-    while (i != back_index)
+    while (i != this->back_index)
     {
         this->unrolled_queue.push_back(this->circularQueue[i]);
         --i;
