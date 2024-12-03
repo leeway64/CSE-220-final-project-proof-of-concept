@@ -232,4 +232,29 @@ TEST_CASE("CircularQueue", "[CircularQueue]")
             REQUIRE(cq2.get_back() == 2);            
         }
     }
+
+    SECTION("get_last and pop_last")
+    {
+        REQUIRE(cq4.get_last() == 8);
+        REQUIRE(cq4.pop_last() == 8);
+
+        REQUIRE(cq4.get_front() == 7);
+        REQUIRE(cq4.get_back() == 223432);
+
+        cq4.push(20);
+        cq4.push(21);
+
+        REQUIRE(cq4.get_queue() == std::vector<int>{21, 34546, 435435, 135, 54654, 1, 4, 90, 6, 7, 20});
+        REQUIRE(cq4.get_front() == 21);
+        REQUIRE(cq4.get_back() == 34546);
+
+        REQUIRE(cq4.get_last() == 20);
+        REQUIRE(cq4.pop_last() == 20);
+        REQUIRE(cq4.get_front() == 21);
+        REQUIRE(cq4.get_back() == 34546);
+
+        REQUIRE(cq4.pop_last() == 7);
+        REQUIRE(cq4.get_front() == 21);
+        REQUIRE(cq4.get_back() == 34546);
+    }
 }
