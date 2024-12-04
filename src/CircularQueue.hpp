@@ -19,6 +19,8 @@ class CircularQueue
         // necessarily be the last value of the vector, and the "back" of the queue might not
         // necessarily be the first value.
         std::vector<T> get_queue();
+        
+        int calculate_priority(int index);
 
         // Return the total number of elements in the circular queue
         int get_size();
@@ -71,7 +73,18 @@ class CircularQueue
         int front_index = 0;
 
         std::vector<T> unrolled_queue{};
+        bool wrap_around = false;
 };
+
+template<class T>
+int CircularQueue<T>::calculate_priority(int index) {
+    if (wrap_around){
+        if (index < back_index){
+            return max_size + index;
+        }
+    }
+    return index;
+}
 
 template<class T>
 CircularQueue<T>::CircularQueue(int max_size)
@@ -108,6 +121,7 @@ void CircularQueue<T>::push(T value)
         this->circularQueue.insert(position, value);
 
         this->back_index = (this->counter + 1) % this->max_size;
+        wrap_around = true;
     }
 
     this->counter++;
@@ -117,18 +131,27 @@ void CircularQueue<T>::push(T value)
 template<class T>
 T CircularQueue<T>::pop()
 {
-    T value = this->circularQueue[this->back_index];
-    auto position = this->circularQueue.begin() + this->back_index;
-
-    this->circularQueue.erase(position);
-    
-    if (this->circularQueue.size() == 1)
-    {
-        this->front_index = 0;
+    int highest_priority = calculate_priority(this->back_index);
+    int target_index = this->back_index;
+    for (size_t i = 1; i < this->circularQueue.size(); i++){
+        int current_index = (this->back_index + i) % max_size;
+        int current_priority = calculate_priority(current_index);
+        if(current_priority < highest_priority){
+            highest_priority = current_priority;
+            target_index = current_index;
+        }
     }
-    if (this->back_index > this->circularQueue.size() - 1)
+    T value = this->circularQueue[target_index];
+
+    this->circularQueue.erase( this->circularQueue.begin() + target_index);
+    
+    if (target_index == this->back_index)
     {
-        this->back_index = 0;
+       this->back_index = (this->back_index) % max_size;
+    }
+    this->counter--;
+    if(this->counter < max_size){
+        wrap_around = false;
     }
 
     return value;
